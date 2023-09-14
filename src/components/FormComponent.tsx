@@ -108,15 +108,6 @@ function FormComponent() {
           />
         </label>
         <label>
-          Dias de Aviso:
-          <input
-            type="number"
-            name="dias_aviso"
-            value={formData.dias_aviso}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
           Férias Vencidas:
           <input
             type="checkbox"
@@ -128,7 +119,7 @@ function FormComponent() {
         <label>
           Dias de Férias:
           <input
-            type="text"
+            type="number"
             name="dias_ferias"
             value={formData.dias_ferias}
             onChange={handleChange}
