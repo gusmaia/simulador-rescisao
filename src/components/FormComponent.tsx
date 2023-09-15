@@ -1,19 +1,19 @@
-import { useFormContext } from '../contexts/FormContext';
-import { useNavigate } from 'react-router-dom';
+import { useFormContext } from '../contexts/FormContext'
+import { useNavigate } from 'react-router-dom'
 
 function FormComponent() {
   const navigate = useNavigate()
   const { formData, setFormData } = useFormContext()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
+    const { name, value, type } = e.target
   
     if (type === 'checkbox') {
       const checkbox = e.target as HTMLInputElement;
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: checkbox.checked,
-      }));
+      }))
     } else if (name == 'salario') {
       const inputValue = e.target.value.replace(/\D/g, '') // Remove não números
 
@@ -83,7 +83,7 @@ function FormComponent() {
         <label>
           Final do Contrato:
           <input
-            type="text"
+            type="date"
             name="final_contrato"
             value={formData.final_contrato}
             onChange={handleChange}
@@ -100,12 +100,10 @@ function FormComponent() {
         </label>
         <label>
           Aviso Prévio:
-          <input
-            type="checkbox"
-            name="aviso"
-            checked={formData.aviso}
-            onChange={handleChange}
-          />
+          <select name="aviso" id="aviso" onChange={handleChange}>
+            <option value={formData.aviso='0'}>Trabalhado</option>
+            <option value={formData.aviso='1'}>Indenizado</option>
+          </select>
         </label>
         <label>
           Férias Vencidas:
@@ -140,4 +138,4 @@ function FormComponent() {
   );
 };
 
-export default FormComponent;
+export default FormComponent

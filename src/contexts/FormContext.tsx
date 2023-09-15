@@ -7,7 +7,7 @@ export interface FormData {
     motivo: string
     final_contrato: string
     salario: string
-    aviso: boolean
+    aviso: string
     ferias_vencidas: boolean
     dias_ferias: number
     dependentes: number
@@ -26,7 +26,7 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       motivo: '',
       final_contrato: '',
       salario: '',
-      aviso: false,
+      aviso: '',
       ferias_vencidas: false,
       dias_ferias: 0,
       dependentes: 0,

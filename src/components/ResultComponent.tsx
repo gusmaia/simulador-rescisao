@@ -1,11 +1,9 @@
-import { FormProvider, useFormContext } from "../contexts/FormContext"
-import { calculaSalario, calc13Prop, calcDiasAvsPrev, calcDataProje, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni } from "../functions/calculo"
+import { FormProvider } from "../contexts/FormContext"
+import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni, calcDescINSS, calcDescIRFF, calcDescINSS13, calcDescIRFF13, calcDescAvsPrev, calcDescRescAntecip } from "../functions/calculo"
 
 
 
 function ResultComponent() {
-    const { formData } = useFormContext()
-    console.log()
 
     return (
         <>
@@ -88,31 +86,31 @@ function ResultComponent() {
                             <tbody>
                                 <tr>
                                     <th scope="row">INSS</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescINSS().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">IRRF</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescIRFF().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">INSS sobre 13º salário</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescINSS13().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">IRRF sobre 13º salário</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescIRFF13().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Aviso prévio</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescAvsPrev().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Rescisão antecipada de contrato de experiência (art. 479 CLT)</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span>{calcDescRescAntecip().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">TOTAL DE DESCONTOS</th>
-                                    <td>R$ <span></span></td>
+                                    <td><span></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -122,7 +120,7 @@ function ResultComponent() {
                             <thead>
                                 <tr>
                                     <th scope="col"><b>LÍQUIDO RESCISÃO</b></th>
-                                    <th scope="col">R$ <span></span></th>
+                                    <th scope="col"><span></span></th>
                                 </tr>
                             </thead>
                         </table>
