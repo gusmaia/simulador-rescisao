@@ -45,7 +45,6 @@ export function calc13Prop() {
     }
 }
 
-//CALCULA DIAS DE AVISO PREVIO INDENIZADO
 export function calcDiasAvsPrev() {
     const { formData } = useFormContext()
     
@@ -66,7 +65,6 @@ export function calcDiasAvsPrev() {
     }
 }
 
-//CALCULA DATA PROJETADA AVISO PREVIO
 export function calcDataProje() {
     const { formData } = useFormContext()
 
@@ -74,7 +72,6 @@ export function calcDataProje() {
     return (addDays(dataRec, calcDiasAvsPrev()))    //adiciona à data de rescisao a projeção do aviso em dias
 }
 
-//calcula valor do aviso previo
 export function calculaAvsPrev() {
     const { formData } = useFormContext()
 
@@ -86,7 +83,6 @@ export function calculaAvsPrev() {
     }
 }
 
-//CALCULA DATA INICIO ULTIMO PERIODO AQUISITIVO DE FERIAS
 export function calcDataUltPerFer() {
     const { formData } = useFormContext()
 
@@ -113,7 +109,6 @@ export function calcSalFamilia() {
     }
 }
 
-//calcula 13 salario indenizado
 export function calc13Indeni() {
     const { formData } = useFormContext()
 
@@ -139,7 +134,6 @@ export function calc13Indeni() {
     }
 }
 
-//calcula ferias vencidas
 export function calcFerVcd() {
     const { formData } = useFormContext()
 
@@ -154,7 +148,6 @@ export function calcFerVcd() {
     }
 }
 
-//calcula 1/3 das ferias
 export function calcFerVcd1_3() {
     const { formData } = useFormContext()
 
@@ -166,7 +159,6 @@ export function calcFerVcd1_3() {
     }
 }
 
-//calcula rescisão antecipada por parte do empregador
 export function calcRescAntecip() {
     const { formData } = useFormContext()
 
@@ -182,7 +174,6 @@ export function calcRescAntecip() {
     }
 }
 
-//calcula ferias proporcionais
 export function calcferPropor() {
     const { formData } = useFormContext()
 
@@ -214,7 +205,6 @@ export function calcferPropor() {
     }
 }
 
-//calcula 1/3 das ferias proporcionais
 export function calcFerPropor1_3() {
     if(calcferPropor() != 0){
         let result = calcferPropor() / 3
@@ -224,7 +214,6 @@ export function calcFerPropor1_3() {
     }
 }
 
-//calcula ferias indenizadas
 export function calcFerIndeni() {
     const { formData } = useFormContext()
 
@@ -244,7 +233,6 @@ export function calcFerIndeni() {
     }
 }
 
-//calcula 1/3 das ferias indenizadas
 export function calcFerIndeni1_3() {
     if (calcFerIndeni() != 0) {
         let ferIndeni1_3 = calcFerIndeni() / 3
@@ -265,7 +253,6 @@ export function calcDescAvsPrev() {
     }
 }
 
-//calcula desconto do INSS
 export function calcDescINSS() {
     let sal = calculaSalario()
     let inss = 0
@@ -285,7 +272,6 @@ export function calcDescINSS() {
     return (inss)
 }
 
-//calcula desconto do IRFF
 export function calcDescIRFF() {
     const { formData } = useFormContext()
 
@@ -309,10 +295,9 @@ export function calcDescIRFF() {
     }
 }
 
-//calcula inss do 13 
 export function calcDescINSS13() {
 
-    let sal = calc13Prop()
+    let sal = calc13Prop() + calc13Indeni()
     if (sal != 0) {
         let inss = 0
         if (sal > 1320.00) {
@@ -334,7 +319,6 @@ export function calcDescINSS13() {
     }
 }
 
-//calcula irff do 13 
 export function calcDescIRFF13() {
     const { formData } = useFormContext()
 
