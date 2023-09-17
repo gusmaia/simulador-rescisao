@@ -25,7 +25,7 @@ function ResultComponent() {
         <>
             <FormProvider>
                 <div className="bg-blue-50 min-h-screen flex flex-col items-center justify-center">
-                    <div className="bg-white p-8 mt-6 mb-6 rounded-lg shadow-md sm:w-96 md:w-1/2">
+                    <div className="bg-white p-8 md:mt-6 rounded-lg shadow-md w-full md:w-1/2">
                         <div>
                             <h1 className="text-4xl font-black text-blue-700 mb-4 text-center">Resultado</h1>
                             <table className="w-full border-collapse border border-blue-300">
@@ -149,7 +149,7 @@ function ResultComponent() {
                             <button onClick={window.print} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Imprimir</button>
                         </div>
                     </div>
-                    <footer className="mb-6">
+                    <footer className="m-6">
                         <pre>
                             Desenvolvido por:    <a className='underline text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-600' target='blank' href="https://github.com/gusmaia">gusmaia</a>
                         </pre>

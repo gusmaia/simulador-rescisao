@@ -55,7 +55,7 @@ function FormComponent() {
   return (
     <>
       <div className="bg-blue-50 min-h-screen flex flex-col items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md sm:w-96 md:w-1/2">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full md:w-1/2 md:mt-6">
             <h1 className="text-4xl font-black text-center text-blue-700 mb-4">Simulador de Rescisão</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
                 <div className="flex flex-col">
@@ -180,7 +180,7 @@ function FormComponent() {
                 </button>
             </form>
         </div>
-        <footer className='absolute bottom-6'>
+        <footer className='m-6'>
             <pre>
                 Desenvolvido por:    <a className='underline text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-600' target='blank' href="https://github.com/gusmaia">gusmaia</a>
             </pre>
