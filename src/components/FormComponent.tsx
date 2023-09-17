@@ -38,104 +38,150 @@ function FormComponent() {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: value,
-      }));
+      }))
     }
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Agora, você pode fazer o que quiser com os dados do formulário
     navigate('/Result')
-  };
+  }
+
+  const isFinalContratoDisabled = !(formData.motivo == '4' || formData.motivo == '5')
+  const isAvisoDisabled = !(formData.motivo == '0' || formData.motivo == '2')
+  const isDiasFeriasDisabled = !(formData.ferias_vencidas == true)
 
   return (
     <>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label>
-          Admissão:
-          <input
-            type="date"
-            name="admissao"
-            value={formData.admissao}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Demissão:
-          <input
-            type="date"
-            name="demissao"
-            value={formData.demissao}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Motivo:
-          <select name="motivo" id="motivo" onChange={handleChange}>
-            <option value={formData.motivo = "0"}>Dispensa sem justa causa</option>
-            <option value={formData.motivo = "1"}>Dispensa por justa causa</option>
-            <option value={formData.motivo = "2"}>Pedido de demissão</option>
-            <option value={formData.motivo = "3"}>Término do contrato de experiência</option>
-            <option value={formData.motivo = "4"}>Rescisão antecipada de contrato de experiencia pelo empregador</option>
-            <option value={formData.motivo = "5"}>Rescisão antecipada de contrato de experiencia pelo empregado</option>
-          </select>
-        </label>
-        <label>
-          Final do Contrato:
-          <input
-            type="date"
-            name="final_contrato"
-            value={formData.final_contrato}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Salário:
-          <input
-            type='text'
-            name="salario"
-            value={formData.salario}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Aviso Prévio:
-          <select name="aviso" id="aviso" onChange={handleChange}>
-            <option value={formData.aviso='0'}>Trabalhado</option>
-            <option value={formData.aviso='1'}>Indenizado</option>
-          </select>
-        </label>
-        <label>
-          Férias Vencidas:
-          <input
-            type="checkbox"
-            name="ferias_vencidas"
-            checked={formData.ferias_vencidas}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Dias de Férias:
-          <input
-            type="number"
-            name="dias_ferias"
-            value={formData.dias_ferias}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Dependentes:
-          <input
-            type="number"
-            name="dependentes"
-            value={formData.dependentes}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Enviar</button>
-      </form>
+      <div className="bg-blue-50 min-h-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded-lg shadow-md sm:w-96 md:w-1/2">
+            <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
+                <div className="flex flex-col">
+                    <label className="text-blue-700">Admissão:</label>
+                    <input
+                        required
+                        type="date"
+                        name="admissao"
+                        id="admissao"
+                        value={formData.admissao}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label className="text-blue-700">Demissão:</label>
+                    <input
+                        required
+                        type="date"
+                        name="demissao"
+                        id="demissao"
+                        value={formData.demissao}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label className="text-blue-700">Motivo:</label>
+                    <select
+                        name="motivo"
+                        id="motivo"
+                        value={formData.motivo}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    >
+                        <option value={"0"}>Dispensa sem justa causa</option>
+                        <option value={"1"}>Dispensa por justa causa</option>
+                        <option value={"2"}>Pedido de demissão</option>
+                        <option value={"3"}>Término do contrato de experiência</option>
+                        <option value={"4"}>Rescisão antecipada de contrato de experiência pelo empregador</option>
+                        <option value={"5"}>Rescisão antecipada de contrato de experiência pelo empregado</option>
+                    </select>
+                </div>
+                <div className="flex flex-col">
+                    <label  className="text-blue-700">Final do Contrato:</label>
+                    <input
+                        required={isFinalContratoDisabled}
+                        disabled={isFinalContratoDisabled}
+                        type="date"
+                        name="final_contrato"
+                        id="final_contrato"
+                        value={formData.final_contrato}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label  className="text-blue-700">Salário:</label>
+                    <input
+                        required
+                        type="text"
+                        name="salario"
+                        id="salario"
+                        placeholder='R$ 0,00'
+                        value={formData.salario}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label  className="text-blue-700">Aviso Prévio:</label>
+                    <select
+                        disabled={isAvisoDisabled}
+                        name="aviso"
+                        id="aviso"
+                        value={formData.aviso}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    >
+                        <option value={"0"}>Trabalhado</option>
+                        <option value={"1"}>Indenizado</option>
+                    </select>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <input
+                        type="checkbox"
+                        name="ferias_vencidas"
+                        id="ferias_vencidas"
+                        checked={formData.ferias_vencidas}
+                        onChange={handleChange}
+                        className="text-blue-500"
+                    />
+                    <label className="text-blue-700">Férias Vencidas</label>
+                </div>
+                <div className="flex flex-col">
+                    <label className="text-blue-700">Dias de Férias:</label>
+                    <input
+                        required
+                        disabled={isDiasFeriasDisabled}
+                        type="number"
+                        name="dias_ferias"
+                        id="dias_ferias"
+                        value={formData.dias_ferias}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <label  className="text-blue-700">Dependentes:</label>
+                    <input
+                        required
+                        type="number"
+                        name="dependentes"
+                        id="dependentes"
+                        value={formData.dependentes}
+                        onChange={handleChange}
+                        className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </div>
     </>
-  );
-};
+  )
+}
 
 export default FormComponent

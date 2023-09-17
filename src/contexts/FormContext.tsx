@@ -23,10 +23,10 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [formData, setFormData] = useState<FormData>({
       admissao: '',
       demissao: '',
-      motivo: '',
+      motivo: '0',
       final_contrato: '',
       salario: '',
-      aviso: '',
+      aviso: '0',
       ferias_vencidas: false,
       dias_ferias: 0,
       dependentes: 0,

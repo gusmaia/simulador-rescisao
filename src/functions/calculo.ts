@@ -104,14 +104,10 @@ export function calcDataUltPerFer() {
 export function calcSalFamilia() {
     const { formData } = useFormContext()
 
-    let calAvs = calculaAvsPrev() == 0 ? 0 : calculaAvsPrev()
-    if (calculaSalario() + calAvs < 1425.56) {
+    let calAvs = calculaAvsPrev()
+    if ((calculaSalario() + calAvs) < 1425.56) {
         let salFam = formData.dependentes * 48.62
-        if(salFam == 0){
-            return (0)
-        }else{
-            return (salFam)
-        }
+        return (salFam)
     } else {
         return (0)
     }
@@ -177,18 +173,9 @@ export function calcRescAntecip() {
     if (formData.motivo == '4') {
         const dataRec = parseISO(formData.demissao)
         const dataPrev = parseISO(formData.final_contrato)
-        const datadif = differenceInMonths(dataPrev, dataRec)
-        let sumMonths= datadif * 30
-
-        if (dataPrev.getDate() > dataRec.getDate()){
-          sumMonths += differenceInDays(dataPrev, dataRec)
-        } else if (dataPrev.getDate() < dataRec.getDate()) {
-            sumMonths += 30 - (dataRec.getDate()) + (dataPrev.getDate())
-        } else {
-            sumMonths += 0
-        }
-        const salProp = (parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.')) / 60)
-        let result = sumMonths * salProp;
+        const datadif = differenceInDays(dataPrev, dataRec) / 2
+        const salProp = (parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.')) / 30)
+        let result = salProp * datadif
         return (result)
     } else {
         return (0)
@@ -245,8 +232,8 @@ export function calcFerIndeni() {
         const dataRec = parseISO(formData.demissao)
         const dataProje = calcDataProje()
         const ultSal = (parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.')) / 12)
-        const res = Math.abs(30 - dataProje.getDate()) + Math.abs(30 - dataProje.getDate())
-        let meses = differenceInMonths(dataProje, dataRec.getMonth()+1)
+        const res = Math.abs(30 - dataProje.getDate() + Math.abs(30 - dataProje.getDate()))
+        let meses = differenceInMonths(dataProje, dataRec)
 
         meses += res > 15 ? 1 : 0
 
@@ -259,7 +246,6 @@ export function calcFerIndeni() {
 
 //calcula 1/3 das ferias indenizadas
 export function calcFerIndeni1_3() {
-
     if (calcFerIndeni() != 0) {
         let ferIndeni1_3 = calcFerIndeni() / 3
         return (ferIndeni1_3)
@@ -268,74 +254,59 @@ export function calcFerIndeni1_3() {
     }
 }
 
+export function calcDescAvsPrev() {
+    const { formData } = useFormContext()
+
+    const sal = parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.'))
+    if (formData.motivo == '2' && formData.aviso == '1') {
+        return (sal)
+    } else {
+        return (0)
+    }
+}
 
 //calcula desconto do INSS
 export function calcDescINSS() {
-
     let sal = calculaSalario()
-    let resultado = 0
-    if (sal >= 1045.00) {
-        resultado += 78.38
-        sal -= 1045.00
-        if (sal >= 1044.6) {
-            resultado += 94.01
-            sal -= 1044.6
-            if (sal >= 1044.8) {
-                resultado += 125.38
-                sal -= 1044.8
-                if (sal >= 2966.66) {
-                    resultado += 415.33
-                    sal -= 1044.8
-                } else {
-                    resultado += sal * 0.14
-                }
-            } else {
-                resultado += sal * 0.12
-            }
+    let inss = 0
+    if (sal > 1320.00) {
+        if (sal < 2571.30) {
+            inss += (sal * 0.09) - 19.80
+        } else if (sal < 3856.95) {
+            inss += (sal * 0.12) - 96.94
+        } else if (sal <= 7507.49) {
+            inss += (sal * 0.14) - 174.08
         } else {
-            resultado += sal * 0.09
+            inss += 876.95
         }
     } else {
-        resultado += sal * 0.075
+        inss += (sal * 0.075)
     }
-    return (resultado != 0 ? resultado : 0)
+    return (inss)
 }
 
 //calcula desconto do IRFF
 export function calcDescIRFF() {
+    const { formData } = useFormContext()
 
-    let sal = calculaSalario() - calcDescINSS()
-    let resultado = 0
-    if (sal >= 1903.98) {
-        resultado += 0;
-        sal -= 1903.98
-        if (sal >= 922.67) {
-            resultado += 69.20
-            sal -= 922.67
-            if (sal >= 924.40) {
-                resultado += 138.66
-                sal -= 924.40
-                if (sal >= 913.63) {
-                    resultado += 205.57
-                    sal -= 913.63
-                    if (sal >=4622.22) {
-                        resultado += sal * 0.275
-                    } else {
-                        resultado += sal * 0.275
-                    }
-                } else {
-                    resultado += sal * 0.225
-                }
+    let sal = calculaSalario() - calcDescINSS() - (189.59 * formData.dependentes)
+    if (sal != 0) {
+        let irrf = 0
+        if (sal > 2112.00) {
+            if (sal < 2826.66) {
+                irrf += (sal * 0.075) - 158.40
+            } else if (sal < 3751.06) {
+                irrf += (sal * 0.15) - 370.40
+            } else if (sal <= 4664.68) {
+                irrf += (sal * 0.225) - 651.73
             } else {
-                resultado += sal * 0.15
+                irrf += (sal * 0.275) - 884.96
             }
-        } else {
-            resultado += sal * 0.075
         }
+        return (irrf)
     } else {
-        resultado += sal * 0
+        return (0)
     }
-    return ((resultado != 0  && resultado != 0) ? resultado : 0)
 }
 
 //calcula inss do 13 
@@ -343,36 +314,21 @@ export function calcDescINSS13() {
 
     let sal = calc13Prop()
     if (sal != 0) {
-        let resultado = 0
-
-        if (sal >= 1045.00) {
-            resultado += 78.38
-            sal -= 1045.00
-
-            if (sal >= 1044.6) {
-                resultado += 94.01
-                sal -= 1044.6
-
-                if (sal >= 1044.8) {
-                    resultado += 125.38
-                    sal -= 1044.8
-
-                    if (sal >= 2966.66) {
-                        resultado += 415.33
-                        sal -= 1044.8
-                    } else {
-                    resultado += sal * 0.14
-                }
+        let inss = 0
+        if (sal > 1320.00) {
+            if (sal < 2571.30) {
+                inss += (sal * 0.09) - 19.80
+            } else if (sal < 3856.95) {
+                inss += (sal * 0.12) - 96.94
+            } else if (sal <= 7507.49) {
+                inss += (sal * 0.14) - 174.08
             } else {
-                resultado += sal * 0.12
+                inss += 876.95
             }
         } else {
-            resultado += sal * 0.09
+            inss += (sal * 0.075)
         }
-    } else {
-        resultado += sal * 0.075
-    }
-    return ((resultado != 0) ? resultado : 0)
+        return (inss)
     } else {
         return (0)
     }
@@ -380,56 +336,23 @@ export function calcDescINSS13() {
 
 //calcula irff do 13 
 export function calcDescIRFF13() {
-
-    let sal = ((calc13Prop() + calc13Indeni() == 0) ? 0 : (calc13Indeni()) - calcDescINSS13())
-    let resultado = 0
-
-    if (sal != 0 && !isNaN(sal)) {
-        if (sal >= 1903.98) {
-            resultado += 0
-            sal -= 1903.98
-
-            if (sal >= 922.67) {
-                resultado += 69.20
-                sal -= 922.67
-
-                if (sal >= 924.40) {
-                    resultado += 138.66
-                    sal -= 924.40
-
-                    if (sal >= 913.63) {
-                        resultado += 205.57
-                        sal -= 913.63
-
-                        if(sal >=4622.22){
-                            resultado += sal * 0.275
-                        } else {
-                            resultado += sal * 0.275
-                        }
-                    } else {
-                        resultado += sal * 0.225
-                    }
-                } else {
-                    resultado += sal * 0.15
-                }
-            } else {
-                resultado += sal * 0.075
-            }
-        } else {
-        resultado += sal * 0
-        }
-        return ((resultado != 0) ? resultado : 0)
-    } else {
-        return (0)
-    }
-}
-
-//arrumar
-export function calcDescAvsPrev() {
     const { formData } = useFormContext()
 
-    if (formData.motivo == '2') {
-        return (formData.salario)
+    let sal = calc13Prop() + calc13Indeni() - calcDescINSS13() - (189.59 * formData.dependentes)
+    if (sal != 0) {
+        let irrf = 0
+        if (sal > 2112.00) {
+            if (sal < 2826.66) {
+                irrf += (sal * 0.075) - 158.40
+            } else if (sal < 3751.06) {
+                irrf += (sal * 0.15) - 370.40
+            } else if (sal <= 4664.68) {
+                irrf += (sal * 0.225) - 651.73
+            } else {
+                irrf += (sal * 0.275) - 884.96
+            }
+        }
+        return (irrf)
     } else {
         return (0)
     }
@@ -441,18 +364,9 @@ export function calcDescRescAntecip() {
         if (formData.motivo == '5') {
             const dataRec = parseISO(formData.demissao)
             const dataPrev = parseISO(formData.final_contrato)
-            const datadif = differenceInMonths(dataPrev, dataRec)
-            let sumMonths= datadif * 30
-
-            if (dataPrev.getDate() > dataRec.getDate()) {
-              sumMonths += differenceInDays(dataPrev, dataRec)
-            } else if (dataPrev.getDate() < dataRec.getDate()) {
-                sumMonths += 30 - (dataRec.getDate()) + (dataPrev.getDate())
-            } else {
-                sumMonths += 0
-            }
-            let salProp = (parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.')) / 60)
-            let result = sumMonths * salProp
+            const datadif = differenceInDays(dataPrev, dataRec) / 2
+            const salProp = (parseFloat(formData.salario.replace('R$ ', '').replace('.', '').replace(',', '.')) / 30)
+            let result = salProp * datadif
             return (result)
         } else {
             return (0)
