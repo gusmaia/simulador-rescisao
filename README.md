@@ -1,6 +1,6 @@
 # Simulador de Rescisão
 
-Este é um projeto de um Simulador de Rescisão desenvolvido em React com TypeScript. O aplicativo permite aos usuários calcular os valores relacionados à rescisão de contrato com base nas informações fornecidas, como data de admissão, data de demissão, motivo da rescisão, salário, entre outros.
+Este é um projeto de um Simulador de Rescisão desenvolvido em React e Context API com TypeScript. O aplicativo permite aos usuários calcular os valores relacionados à rescisão de contrato com base nas informações fornecidas, como data de admissão, data de demissão, motivo da rescisão, salário, entre outros.
 
 ## Funcionalidades
 
@@ -32,3 +32,13 @@ Certifique-se de ter o Node.js instalado em sua máquina. Você pode baixá-lo e
 1. Clone o repositório para o seu sistema local.
    ```bash
    git clone https://github.com/seu-usuario/simulador-de-rescisao.git
+
+2. Instale a dependências do projeto.
+    ```bash
+    yarn
+
+3. O aplicativo estará disponível no seu navegador em http://localhost:5173.
+
+4. Preencha o formulário com as informações relevantes e clique no botão "Calcular" para obter os resultados da rescisão.
+
+Este projeto foi desenvolvido por Gustavo Maia.
