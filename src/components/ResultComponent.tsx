@@ -5,22 +5,47 @@ import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFam
 
 
 function ResultComponent() {
-    const navigate = useNavigate()
-
+    const navigate = useNavigate() // Importa o hook de navegação do React Router.
+  
+    // Função para redirecionar para a página inicial.
     const redirect = () => {
-        navigate('/')
-        navigate(0)
+      navigate('/') // Navega para a rota '/'
+      navigate(0)   // Refresh na pagina.
     }
-
+  
+    // Função para calcular o valor total dos proventos.
     const proventos = () => {
-        const resultado = calculaSalario() + calc13Prop() + calculaAvsPrev() + calcRescAntecip() + calcSalFamilia() + calc13Indeni() + calcFerVcd() + calcFerVcd1_3() + calcferPropor() + calcFerIndeni() + calcFerIndeni1_3()
-        return (resultado)
+      // Aqui, você chama várias funções de cálculo e soma seus resultados.
+      const resultado =
+        calculaSalario() +
+        calc13Prop() +
+        calculaAvsPrev() +
+        calcRescAntecip() +
+        calcSalFamilia() +
+        calc13Indeni() +
+        calcFerVcd() +
+        calcFerVcd1_3() +
+        calcferPropor() +
+        calcFerIndeni() +
+        calcFerIndeni1_3()
+  
+      return resultado // Retorna o valor total dos proventos.
+    }
+  
+    // Função para calcular o valor total dos descontos.
+    const descontos = () => {
+      // Aqui, você chama várias funções de cálculo e soma seus resultados.
+      const resultado =
+        calcDescAvsPrev() +
+        calcDescINSS() +
+        calcDescINSS13() +
+        calcDescIRFF() +
+        calcDescIRFF13() +
+        calcDescRescAntecip()
+  
+      return resultado // Retorna o valor total dos descontos.
     }
 
-    const descontos = () => {
-        const resultado = calcDescAvsPrev() + calcDescINSS() + calcDescINSS13() + calcDescIRFF() + calcDescIRFF13() + calcDescRescAntecip()
-        return (resultado)
-    }
     return (
         <>
             <FormProvider>

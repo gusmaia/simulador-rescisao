@@ -2,55 +2,58 @@ import { useFormContext } from '../contexts/FormContext'
 import { useNavigate } from 'react-router-dom'
 
 function FormComponent() {
-  const navigate = useNavigate()
-  const { formData, setFormData } = useFormContext()
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target
+    const navigate = useNavigate() // Importa o gancho de navegação do React Router.
+    const { formData, setFormData } = useFormContext() // Obtém os dados do formulário e a função para atualizá-los do contexto.
   
-    if (type === 'checkbox') {
-      const checkbox = e.target as HTMLInputElement;
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: checkbox.checked,
-      }))
-    } else if (name == 'salario') {
-      const inputValue = e.target.value.replace(/\D/g, '') // Remove não números
-
-      // Adicione zeros à esquerda para garantir que tenhamos um número com 2 casas decimais
-      const paddedValue = inputValue.padStart(3, '')
-
-      // Separe os últimos 2 dígitos (centavos) do resto do valor
-      const cents = paddedValue.slice(-2)
-      const dollars = paddedValue.slice(0, -2)
-
-      // Formate os dólares com ponto e vírgula a cada 3 dígitos
-      const formattedDollars = dollars.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-
-      // Crie o valor final com a formatação BRL
-      const formattedValue = `R$ ${formattedDollars},${cents}`
-
-      setFormData((prevFormData => ({
-        ...prevFormData,
-        [name]: formattedValue
-      })))
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }))
+    // Função para lidar com mudanças nos campos do formulário.
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const { name, value, type } = e.target
+  
+      if (type === 'checkbox') {
+        const checkbox = e.target as HTMLInputElement
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: checkbox.checked,
+        }))
+      } else if (name === 'salario') {
+        const inputValue = e.target.value.replace(/\D/g, '') // Remove não números
+  
+        // Adicione zeros à esquerda para garantir que tenhamos um número com 2 casas decimais
+        const paddedValue = inputValue.padStart(3, '')
+  
+        // Separe os últimos 2 dígitos (centavos) do resto do valor
+        const cents = paddedValue.slice(-2)
+        const dollars = paddedValue.slice(0, -2)
+  
+        // Formate os dólares com ponto e vírgula a cada 3 dígitos
+        const formattedDollars = dollars.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+  
+        // Crie o valor final com a formatação BRL
+        const formattedValue = `R$ ${formattedDollars},${cents}`
+  
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: formattedValue,
+        }))
+      } else {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+        }))
+      }
     }
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Agora, você pode fazer o que quiser com os dados do formulário
-    navigate('/Result')
-  }
-
-  const isFinalContratoDisabled = !(formData.motivo == '4' || formData.motivo == '5')
-  const isAvisoDisabled = !(formData.motivo == '0' || formData.motivo == '2')
-  const isDiasFeriasDisabled = !(formData.ferias_vencidas == true)
+  
+    // Função para lidar com o envio do formulário.
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault()
+      // Agora, você pode fazer o que quiser com os dados do formulário, como navegar para outra página.
+      navigate('/Result') // Navega para a rota '/Result'.
+    }
+  
+    // Define variáveis para determinar se alguns campos devem estar desabilitados com base nos valores do formulário.
+    const isFinalContratoDisabled = !(formData.motivo === '4' || formData.motivo === '5')
+    const isAvisoDisabled = !(formData.motivo === '0' || formData.motivo === '2')
+    const isDiasFeriasDisabled = !(formData.ferias_vencidas === true)
 
   return (
     <>
