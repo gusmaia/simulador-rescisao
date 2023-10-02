@@ -15,7 +15,7 @@ function FormComponent() {
           ...prevFormData,
           [name]: checkbox.checked,
         }))
-      } else if (name === 'salario') {
+      } else if (name === 'salario' || name === 'fgts') {
         const inputValue = e.target.value.replace(/\D/g, '') // Remove não números
   
         // Adicione zeros à esquerda para garantir que tenhamos um número com 2 casas decimais
@@ -54,6 +54,7 @@ function FormComponent() {
     const isFinalContratoDisabled = !(formData.motivo === '4' || formData.motivo === '5')
     const isAvisoDisabled = !(formData.motivo === '0' || formData.motivo === '2')
     const isDiasFeriasDisabled = !(formData.ferias_vencidas === true)
+    const isFgtsDisabled = !(formData.motivo === '0' || formData.motivo === '4')
 
   return (
     <>
@@ -178,7 +179,20 @@ function FormComponent() {
                         className="border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                     />
                 </div>
-                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                <div className='flex flex-col'>
+                    <label className='text-blue-700'>Base FGTS</label>
+                    <input
+                        disabled={isFgtsDisabled}
+                        type="text"
+                        name="fgts"
+                        id="fgts"
+                        placeholder='R$ 0,00'
+                        value={formData.fgts}
+                        onChange={handleChange}
+                        className='border border-blue-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500'
+                    />
+                </div>
+                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:bg-blue-600">
                     Enviar
                 </button>
             </form>

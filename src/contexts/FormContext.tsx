@@ -11,6 +11,7 @@ export interface FormData {
     ferias_vencidas: boolean
     dias_ferias: number
     dependentes: number
+    fgts: string
 }
 
 // Crie o contexto
@@ -30,6 +31,7 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       ferias_vencidas: false,
       dias_ferias: 0,
       dependentes: 0,
+      fgts: '',
     })
 
     return (
@@ -43,7 +45,7 @@ export const FormProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useFormContext = () => {
     const context = useContext(FormContext)
     if (!context) {
-        throw new Error("useFormContext deve ser usado dentro de um FormProvider!");
+        throw new Error("useFormContext deve ser usado dentro de um FormProvider!")
     }
     return context
 }

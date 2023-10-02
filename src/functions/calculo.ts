@@ -276,6 +276,48 @@ export function calcFerIndeni1_3() {
       return 0 // Retorna 0 se as férias indenizadas forem iguais a 0.
     }
 }
+
+export function calcFGTSMes() {
+  const { formData } = useFormContext()
+
+  if (formData.motivo == '0' || formData.motivo == '3' || formData.motivo == '4') {
+    let fgtsMes = calculaSalario() * 0.08
+    return fgtsMes
+  } else {
+    return 0
+  }
+}
+
+export function calcFGTSAvsIndeni() {
+  const { formData } = useFormContext()
+
+  if (formData.motivo == '0') {
+    let fgtsAvsIndeni = calculaAvsPrev() * 0.08
+    return fgtsAvsIndeni
+  } else {
+    return 0
+  }
+}
+
+export function calcMultaFGTS() {
+  const { formData } = useFormContext()
+
+  if (formData.motivo == '0' || formData.motivo == '4') {
+    const baseFgts = parseFloat(formData.fgts.replace('R$ ', '').replace('.', '').replace(',', '.'))
+    let multaFgts = (baseFgts + calcFGTSMes() + calcFGTSAvsIndeni()) * 0.4
+    return multaFgts
+  } else {
+    return 0
+  }
+}
+
+export function getBaseFGTS() {
+  const { formData } = useFormContext()
+
+  const base = formData.fgts === '' ? 0 : parseFloat(formData.fgts.replace('R$ ', '').replace('.', '').replace(',', '.'))
+
+  return base
+}
   
   // Função para calcular o desconto do aviso prévio.
 export function calcDescAvsPrev() {

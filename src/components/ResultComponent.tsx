@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { FormProvider } from "../contexts/FormContext"
-import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni, calcFerIndeni1_3, calcDescINSS, calcDescIRFF, calcDescINSS13, calcDescIRFF13, calcDescAvsPrev, calcDescRescAntecip } from "../functions/calculo"
+import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni, calcFerIndeni1_3, calcDescINSS, calcDescIRFF, calcDescINSS13, calcDescIRFF13, calcDescAvsPrev, calcDescRescAntecip, calcFGTSMes, calcFGTSAvsIndeni, calcMultaFGTS, getBaseFGTS } from "../functions/calculo"
 
 
 
@@ -44,6 +44,17 @@ function ResultComponent() {
         calcDescRescAntecip()
   
       return resultado // Retorna o valor total dos descontos.
+    }
+
+    const totalFgts = () => {
+        // Aqui, você chama várias funções de cálculo e soma seus resultados.
+        const resultado =
+            getBaseFGTS() +
+            calcFGTSMes() +
+            calcFGTSAvsIndeni() +
+            calcMultaFGTS()
+
+    return resultado // Retorna o valor total dos descontos.
     }
 
     return (
@@ -169,11 +180,52 @@ function ResultComponent() {
                             </table>
                         </div>
 
-                        <div className="mt-8 flex justify-between">
-                            <button onClick={redirect} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Voltar</button>
-                            <button onClick={window.print} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Imprimir</button>
+                        <div className="mt-8">
+                            <table className="w-full border-collapse border border-blue-300">
+                                <thead>
+                                    <tr className="bg-blue-100">
+                                        <th scope="col" className="text-xl p-2 border border-blue-300">Proventos de FGTS</th>
+                                        <th scope="col" className="text-xl p-2 border border-blue-300">Valores</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" className="font-medium p-2 border border-blue-300">Base FGTS</th>
+                                        <td className="p-2 border border-blue-300"><span>{getBaseFGTS().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="font-medium p-2 border border-blue-300">FGTS no mês</th>
+                                        <td className="p-2 border border-blue-300"><span>{calcFGTSMes().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="font-medium p-2 border border-blue-300">FGTS sobre aviso prévio indenizado</th>
+                                        <td className="p-2 border border-blue-300"><span>{calcFGTSAvsIndeni().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" className="font-medium p-2 border border-blue-300">Multa Rescisória de 40%</th>
+                                        <td className="p-2 border border-blue-300"><span>{calcMultaFGTS().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="mt-8">
+                            <table className="w-full border-collapse border border-blue-300">
+                                <thead>
+                                    <tr className="bg-blue-100">
+                                        <th scope="col" className="text-xl p-2 border border-blue-300"><b>TOTAL FGTS</b></th>
+                                        <th scope="col" className="text-xl p-2 border border-blue-300"><span>{totalFgts().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <div className="mt-8 flex justify-center">
+                            <button onClick={redirect} className="mx-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Voltar</button>
+                            <button onClick={window.print} className="mx-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-600">Imprimir</button>
                         </div>
                     </div>
+
                     <footer className="m-6">
                         <pre>
                             Desenvolvido por:    <a className='underline text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-600' target='blank' href="https://github.com/gusmaia">gusmaia</a>
