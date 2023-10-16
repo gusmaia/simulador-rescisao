@@ -281,7 +281,7 @@ export function calcFGTSMes() {
   const { formData } = useFormContext()
 
   if (formData.motivo == '0' || formData.motivo == '3' || formData.motivo == '4') {
-    let fgtsMes = calculaSalario() * 0.08
+    let fgtsMes = (calculaSalario() + calc13Prop()) * 0.08
     return fgtsMes
   } else {
     return 0
@@ -292,7 +292,7 @@ export function calcFGTSAvsIndeni() {
   const { formData } = useFormContext()
 
   if (formData.motivo == '0') {
-    let fgtsAvsIndeni = calculaAvsPrev() * 0.08
+    let fgtsAvsIndeni = (calculaAvsPrev() + calc13Indeni()) * 0.08
     return fgtsAvsIndeni
   } else {
     return 0

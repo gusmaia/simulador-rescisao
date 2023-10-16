@@ -26,6 +26,7 @@ function ResultComponent() {
         calcFerVcd() +
         calcFerVcd1_3() +
         calcferPropor() +
+        calcFerPropor1_3() +
         calcFerIndeni() +
         calcFerIndeni1_3()
   

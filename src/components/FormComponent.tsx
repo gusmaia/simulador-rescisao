@@ -183,6 +183,7 @@ function FormComponent() {
                     <label className='text-blue-700'>Base FGTS</label>
                     <input
                         disabled={isFgtsDisabled}
+                        required
                         type="text"
                         name="fgts"
                         id="fgts"
