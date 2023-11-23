@@ -6,7 +6,6 @@ import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFam
 
 function ResultComponent() {
     const navigate = useNavigate() // Importa o hook de navegação do React Router.
-    console.log(calcferPropor())
     // Função para redirecionar para a página inicial.
     const redirect = () => {
       navigate('/') // Navega para a rota '/'
