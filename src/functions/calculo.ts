@@ -217,7 +217,7 @@ export function calcferPropor() {
       let addMonth = 0
   
       if (dataRec.getDate() > dataUltPer.getDate()) {
-        addMonth += differenceInDays(dataRec, dataUltPer)
+        addMonth += dataRec.getDate() - dataUltPer.getDate()
       } else if (dataRec.getDate() < dataUltPer.getDate()) {
         addMonth += 30 - dataUltPer.getDate() + dataRec.getDate()
       } else {
@@ -229,7 +229,7 @@ export function calcferPropor() {
       }
   
       let resu = result * ultSal
-  
+      
       return resu === 0 || isNaN(resu) ? 0 : resu // Retorna o valor das férias proporcionais calculadas.
     } else {
       return 0 // Retorna 0 se o motivo for igual a '1'.
