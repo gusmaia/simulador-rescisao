@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { FormProvider } from "../contexts/FormContext"
-import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni, calcFerIndeni1_3, calcDescINSS, calcDescIRFF, calcDescINSS13, calcDescIRFF13, calcDescAvsPrev, calcDescRescAntecip, calcFGTSMes, calcFGTSAvsIndeni, calcMultaFGTS, getBaseFGTS, calcDataUltPerFer } from "../functions/calculo"
+import { calculaSalario, calc13Prop, calculaAvsPrev, calcRescAntecip, calcSalFamilia, calc13Indeni, calcFerVcd, calcFerVcd1_3, calcferPropor, calcFerPropor1_3, calcFerIndeni, calcFerIndeni1_3, calcDescINSS, calcDescIRFF, calcDescINSS13, calcDescIRFF13, calcDescAvsPrev, calcDescRescAntecip, calcFGTSMes, calcFGTSAvsIndeni, calcMultaFGTS, getBaseFGTS } from "../functions/calculo"
 
 
 
 function ResultComponent() {
     const navigate = useNavigate() // Importa o hook de navegação do React Router.
-    console.log(calcferPropor())
     // Função para redirecionar para a página inicial.
     const redirect = () => {
       navigate('/') // Navega para a rota '/'
